@@ -1,0 +1,13 @@
+# https://docs.docker.jp/compose/wordpress.html
+# https://qiita.com/shikuno_dev/items/f236c8280bb745dd6fb4
+services:
+  # Nginxの定義
+  nginx:
+    container_name: nginx
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+    # ホストマシンのポートをコンテナのポートにマッピング
+    ports:
+      # <ホストマシンのポート>:<コンテナのポート>
+      - "80:80"
