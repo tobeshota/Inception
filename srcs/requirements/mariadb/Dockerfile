@@ -6,7 +6,11 @@
 
 FROM debian:stable
 
-RUN apt update && apt install -y mariadb-server
+RUN apt update && apt install -y \
+	# For mariadb
+	mariadb-server \
+	# For envsubst
+	gettext
 
 # ポートを開ける
 EXPOSE 3306
@@ -15,12 +19,14 @@ EXPOSE 3306
 COPY ./my.cnf /etc/mysql/mariadb.conf.d/
 
 # init.sql をコンテナの初期化ディレクトリにコピー
-COPY ./init.sql /docker-entrypoint-initdb.d/
+COPY ./init.sql /tmp/
+COPY ./entrypoint.sh /tmp/
+RUN chmod +x /tmp/entrypoint.sh
 
 # https://qiita.com/takeyu1013/items/4b0b59d46956839b0f74
 # 最後にVOLUMEでコンテナ内のMariaDBのデータをローカルに保存します。
 # これの目的は、MariaDBのコンテナを停止してもデータが消えないように、ローカルにセーブデータを保存することです。
-VOLUME ["/var/lib/mariadb"]
+VOLUME /var/lib/mysql
 
 
 # mysqld用のソケットファイルを格納するディレクトリを作成
@@ -28,6 +34,4 @@ RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 # MariaDBのクライアントを非rootユーザー（mysql）で起動するように指定
 USER mysql
 
-
-# mariadbサーバを起動する（起動コマンドはmysqld）
-CMD ["mysqld"]
+ENTRYPOINT [ "/tmp/entrypoint.sh" ]
