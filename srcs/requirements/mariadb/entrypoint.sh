@@ -13,7 +13,7 @@ init_database() {
 
 # mariadbを更新または初期化する
 install_mariadb() {
-    if [! ls /var/lib/mysql/mysql/user.* > /dev/null 2>&1]; then
+    if ls /var/lib/mysql/mysql/user.* > /dev/null 2>&1; then
         # 既存のデータディレクトリ（/var/lib/mysql）にシステムテーブル（特にmysql.user）が存在する場合，
         # テーブルの互換性をmariadbサーバのバージョンと合わせること（mysql_upgrade）が必要となる．
         # mysql_upgradeはMariaDBサーバが稼働している状態で実行する必要があるため，
@@ -41,8 +41,8 @@ install_mariadb() {
 }
 
 main() {
-    install_mariadb
     init_database
+    install_mariadb
     # MariaDBサーバを実行
     exec mysqld
 }
