@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 # /tmp/init_substituted.sqlが存在しない場合は初回起動とみなして初期化処理を実行する
 init_database() {
