@@ -1,7 +1,6 @@
 # https://docs.docker.jp/compose/wordpress.html
 # https://qiita.com/shikuno_dev/items/f236c8280bb745dd6fb4
 services:
-  # Nginxの定義
   nginx:
     container_name: nginx
     build:
@@ -10,4 +9,67 @@ services:
     # ホストマシンのポートをコンテナのポートにマッピング
     ports:
       # <ホストマシンのポート>:<コンテナのポート>
-      - "80:80"
+      - "443:443"
+    networks:
+      srcs_inception:
+
+  mariadb:
+    container_name: mariadb
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+    depends_on:
+      - nginx
+    ports:
+      - "3306:3306"
+    volumes:  # 名前付きボリュームを用いてデータを永続化する
+      # <ホストマシンのパス>:<コンテナのパス>
+      - maridb_data:/var/lib/mysql
+    restart: always
+    env_file:
+      - .env
+    networks:
+      srcs_inception:
+
+  wordpress:
+    # image: wordpress:latest
+    container_name: wordpress
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    depends_on:
+      - nginx
+      - mariadb
+    ports:
+      - "9000:9000"
+    volumes:
+      - wordpress_data:/var/www/html
+    restart: always
+    env_file:
+      - .env
+    networks:
+      srcs_inception:
+
+
+# 名前付きボリュームを定義
+volumes:
+  maridb_data:
+    # name: maridb_data
+    # Dockerのローカルボリュームドライバーを使用する．
+    # つまり，データをホストマシン上のローカルファイルシステムに保存する
+    # driver: local
+    # driver_opts:
+    #   type: none
+    #   device: ${HOME}/Desktop/wb
+    #   o: bind
+  wordpress_data:
+    # name: wordpress_data
+    # driver: local
+    # driver_opts:
+    #   type: none
+    #   device: ${HOME}/Desktop/web
+    #   o: bind
+
+networks:
+  srcs_inception:
+    driver: bridge
