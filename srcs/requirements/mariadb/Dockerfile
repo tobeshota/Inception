@@ -29,9 +29,11 @@ RUN chmod +x /tmp/entrypoint.sh
 VOLUME /var/lib/mysql
 
 
-# mysqld用のソケットファイルを格納するディレクトリを作成
-RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
-# MariaDBのクライアントを非rootユーザー（mysql）で起動するように指定
-USER mysql
+# root権限がないとinit.sqlで作ったユーザに権限を付与できない．
+# 権限を付与できないとwordpressのコンテナからアクセスできない．
+
+
+# MariaDBサーバがUnixソケットファイル（/run/mysqld/mysqld.sock）を作成するためのディレクトリを作成する
+RUN mkdir -p /run/mysqld
 
 ENTRYPOINT [ "/tmp/entrypoint.sh" ]
