@@ -11,7 +11,7 @@ services:
       # <ホストマシンのポート>:<コンテナのポート>
       - "443:443"
     networks:
-      srcs_inception:
+      inception:
 
   mariadb:
     container_name: mariadb
@@ -29,7 +29,7 @@ services:
     env_file:
       - .env
     networks:
-      srcs_inception:
+      inception:
 
   wordpress:
     # image: wordpress:latest
@@ -48,7 +48,7 @@ services:
     env_file:
       - .env
     networks:
-      srcs_inception:
+      inception:
 
 
 # 名前付きボリュームを定義
@@ -71,5 +71,5 @@ volumes:
     #   o: bind
 
 networks:
-  srcs_inception:
+  inception:
     driver: bridge
