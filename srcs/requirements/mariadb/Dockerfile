@@ -28,11 +28,6 @@ RUN chmod +x /tmp/entrypoint.sh
 # これの目的は、MariaDBのコンテナを停止してもデータが消えないように、ローカルにセーブデータを保存することです。
 VOLUME /var/lib/mysql
 
-
-# root権限がないとinit.sqlで作ったユーザに権限を付与できない．
-# 権限を付与できないとwordpressのコンテナからアクセスできない．
-
-
 # MariaDBサーバがUnixソケットファイル（/run/mysqld/mysqld.sock）を作成するためのディレクトリを作成する
 RUN mkdir -p /run/mysqld
 
