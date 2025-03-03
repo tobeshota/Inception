@@ -32,7 +32,6 @@ services:
       inception:
 
   wordpress:
-    # image: wordpress:latest
     container_name: wordpress
     build:
       context: ./requirements/wordpress
