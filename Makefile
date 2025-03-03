@@ -1,6 +1,6 @@
 COMPOPSE_FILE = ./srcs/docker-compose.yml
 
-all: up
+all: up resolve
 
 re: clean all
 
@@ -10,6 +10,9 @@ clean:
 	# --rmi all: すべてのイメージを削除する．イメージがコンテナによって使用されている場合，コンテナも削除される．
 	# --volumes: ボリュームを削除する
 	docker-compose -f ${COMPOPSE_FILE} down --rmi all --volumes
+	docker system prune -a
+	sudo rm -rf ~/data/db ~/data/web | true
+	sudo mv /etc/hosts.bak /etc/hosts | true
 
 bals:
 	# すべてのコンテナを削除
@@ -22,8 +25,13 @@ bals:
 	docker network prune -f | true
 	# すべてのボリュームを削除
 	docker volume rm `docker volume ls -q` | true
+	# mariadbとwordpressのデータを削除
+	sudo rm -rf ~/data/db ~/data/web | true
+	# /etc/hostsを元に戻す
+	sudo mv /etc/hosts.bak /etc/hosts | true
 
 up:
+	mkdir -p ~/data/db ~/data/web
 	docker-compose -f ${COMPOPSE_FILE} up -d
 
 down:
