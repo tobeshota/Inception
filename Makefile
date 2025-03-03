@@ -35,6 +35,13 @@ stop:
 start:
 	docker-compose -f ${COMPOPSE_FILE} start
 
+# 名前解決する
+resolve:
+	sudo cp /etc/hosts /etc/hosts.bak
+	sudo chmod 777 /etc/hosts
+	sudo printf "\n127.0.0.1 toshota.42.fr" >> /etc/hosts
+	sudo chmod 644 /etc/hosts
+
 ps:
 	docker-compose -f ${COMPOPSE_FILE} ps -a
 
