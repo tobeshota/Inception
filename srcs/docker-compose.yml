@@ -11,8 +11,7 @@ services:
       - mariadb
     ports:
       - "443:443"
-    # ホストマシンのポートをコンテナのポートにマッピング
-    volumes:  # <ホストマシンのポート>:<コンテナのポート>
+    volumes:
       - /Users/tobeshota/data/web:/var/www/html
     networks:
       inception:
@@ -24,8 +23,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3306:3306"
-    volumes:  # 名前付きボリュームを用いてデータを永続化する
-      # <ホストマシンのパス>:<コンテナのパス>
+    volumes:
       - /Users/tobeshota/data/db:/var/lib/mysql
     restart: always
     env_file:
