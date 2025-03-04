@@ -4,8 +4,6 @@
 # mariadbの起動を待機
 sleep 10
 
-
-
 # wordpressは/var/www/html配下にインストールされるため、ディレクトリを作成する必要がある
 wd=/var/www/html
 mkdir -p $wd
@@ -28,27 +26,16 @@ if [ ! -f wp-load.php ]; then
 	wp core download --allow-root
 	## wp-config.phpの更新
 	mv /tmp/wp-config.php $wd/wp-config.php
-	rm -f $wd/wp-config-sample.php	# wp core download --allow-root 実行後存在する
-	# wordpressのインストール
-	# wp config create --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASSWORD --dbhost=$DB_HOST --allow-root --path=$wd	# wp-config.phpで設定されるため不要
+	rm -f $wd/wp-config-sample.php
 
-
-	# ここまでにmariadbが起動していなければならない．
-	wp core install --url=$WP_URL/ --title=$WP_TITLE --admin_user=$WP_ADMIN --admin_password=$WP_ADMIN_PASS --admin_email=$WP_ADMIN_EMAIL --skip-email --allow-root --path=$wd
+	wp core install --url=$WP_URL/ --title=$WP_TITLE --admin_user=$WP_ADMIN --admin_password=$WP_ADMIN_PASS --admin_email=$WP_ADMIN_EMAIL --allow-root --path=$wd
 	# ユーザーが存在しない場合にのみ、ユーザー作成
 	if ! wp user get $WP_USER --allow-root > /dev/null 2>&1; then
 		wp user create $WP_USER $WP_EMAIL --role=author --user_pass=$WP_PASS --allow-root --path=$wd
 	fi
-
-	# wp theme install astra --activate --allow-root
-	# wp plugin update --all --allow-root
 else
 	echo "WordPress files already exist. Skipping download and installation."
 fi
 
-
-## PHP-FPMの設定
-# PHP-FPMがPHP-FPMソケットファイルなどのランタイムファイルを保存するために必要なディレクトリ（/run/php）を作成する．
-# mkdir /run/php
-# PHP-FPMを-F（フォアグラウンド）で起動する（コンテナが終了しない様にするため）
+# PHP-FPMを-F（フォアグラウンド）で起動する（コンテナが終了しないようにするため）
 exec php-fpm8.2 -F
