@@ -12,7 +12,7 @@ services:
     ports:
       - "443:443"
     volumes:
-      - /Users/tobeshota/data/web:/var/www/html
+      - ${HOME}/data/web:/var/www/html
     networks:
       inception:
 
@@ -24,7 +24,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - /Users/tobeshota/data/db:/var/lib/mysql
+      - ${HOME}/data/db:/var/lib/mysql
     restart: always
     env_file:
       - .env
@@ -41,7 +41,7 @@ services:
     ports:
       - "9000:9000"
     volumes:
-      - /Users/tobeshota/data/web:/var/www/html
+      - ${HOME}/data/web:/var/www/html
     restart: always
     env_file:
       - .env
