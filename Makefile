@@ -9,8 +9,8 @@ clean:
 	# --volumes: ボリュームを削除する
 	docker-compose -f ${COMPOPSE_FILE} down --rmi all --volumes
 	docker system prune -a
-	sudo rm -rf ~/data/db ~/data/web | true
-	sudo mv /etc/hosts.bak /etc/hosts | true
+	sudo rm -rf ~/data/db ~/data/web
+	sudo mv /etc/hosts.bak /etc/hosts
 
 up:
 	mkdir -p ~/data/db ~/data/web
