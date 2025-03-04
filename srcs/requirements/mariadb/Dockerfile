@@ -1,8 +1,7 @@
 ## Dockerfileのビルドとコンテナの起動方法
 # docker build -t mariadb .
 # docker run --name mariadb-container mariadb
-# (別ターミナルでdocker exec -it mariadb-container mysql -u mysql -p)
-# (パスワードはpassword)
+# (別ターミナルでdocker exec -it mariadb-container bash)
 
 FROM debian:stable
 
