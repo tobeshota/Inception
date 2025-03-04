@@ -1,4 +1,4 @@
-COMPOPSE_FILE = ./srcs/docker-compose.yml
+COMPOPSE_FILE = srcs/docker-compose.yml
 
 all: up resolve
 
