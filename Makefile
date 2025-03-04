@@ -8,11 +8,14 @@ up:
 
 # 名前解決する
 resolve:
-	sudo cp /etc/hosts /etc/hosts.bak
-	sudo chmod 777 /etc/hosts
-	sudo printf "\n127.0.0.1 toshota.42.fr" >> /etc/hosts
-	sudo chmod 644 /etc/hosts
-
+	@if grep < /etc/hosts -q "toshota.42.fr"; then \
+		echo "toshota.42.fr is already resolved"; \
+	else \
+		sudo cp /etc/hosts /etc/hosts.bak; \
+		sudo chmod 777 /etc/hosts; \
+		sudo printf "\n127.0.0.1 toshota.42.fr\n" >> /etc/hosts; \
+		sudo chmod 644 /etc/hosts; \
+	fi
 clean:
 	# --rmi all: すべてのイメージを削除する．イメージがコンテナによって使用されている場合，コンテナも削除される．
 	# --volumes: ボリュームを削除する
