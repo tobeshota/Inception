@@ -8,7 +8,7 @@ up:
 
 # 名前解決する
 resolve:
-	@if grep < /etc/hosts -q "toshota.42.fr"; then \
+	@if grep < /etc/hosts -q "127.0.0.1 toshota.42.fr"; then \
 		echo "toshota.42.fr is already resolved"; \
 	else \
 		sudo cp /etc/hosts /etc/hosts.bak; \
