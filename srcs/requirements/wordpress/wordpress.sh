@@ -29,7 +29,7 @@ if [ ! -f wp-load.php ]; then
 	rm -f $wd/wp-config-sample.php
 
 	wp core install --url=$WP_URL/ --title=$WP_TITLE --admin_user=$WP_ADMIN --admin_password=$WP_ADMIN_PASS --admin_email=$WP_ADMIN_EMAIL --allow-root --path=$wd
-	# ユーザーが存在しない場合にのみ、ユーザー作成
+	# ユーザーが存在しない場合のみユーザを作成する
 	if ! wp user get $WP_USER --allow-root > /dev/null 2>&1; then
 		wp user create $WP_USER $WP_EMAIL --role=author --user_pass=$WP_PASS --allow-root --path=$wd
 	fi
