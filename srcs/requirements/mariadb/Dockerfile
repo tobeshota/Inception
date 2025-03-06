@@ -3,7 +3,7 @@
 # docker run --name mariadb-container mariadb
 # (別ターミナルでdocker exec -it mariadb-container bash)
 
-FROM debian:stable
+FROM debian:bookworm
 
 RUN apt update && apt install -y \
 	# For mariadb

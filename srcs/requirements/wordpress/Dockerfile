@@ -1,6 +1,6 @@
 # docker rm -f wordpress-container ; docker build -t wordpress .
 # docker run -p 9000:9000 --name wordpress-container wordpress
-FROM debian:stable
+FROM debian:bookworm
 
 # php-fpmをインストール
 RUN apt update && apt install -y \
