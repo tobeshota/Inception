@@ -16,6 +16,7 @@ resolve:
 		sudo printf "\n127.0.0.1 toshota.42.fr\n" >> /etc/hosts; \
 		sudo chmod 644 /etc/hosts; \
 	fi
+
 clean:
 	# --rmi all: すべてのイメージを削除する．イメージがコンテナによって使用されている場合，コンテナも削除される．
 	# --volumes: ボリュームを削除する
