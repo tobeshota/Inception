@@ -4,7 +4,7 @@
 ## 軌道の確認方法
 # <ブラウザの場合> "https://localhost:443"を開く
 # <curlコマンドの場合>  curl -k https://localhost:443
-FROM debian:bookworm
+FROM debian:bullseye
 
 RUN apt update && apt install -y \
 	nginx \
