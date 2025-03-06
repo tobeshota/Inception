@@ -28,6 +28,6 @@ RUN chmod +x /tmp/entrypoint.sh
 VOLUME /var/lib/mysql
 
 # MariaDBサーバがUnixソケットファイル（/run/mysqld/mysqld.sock）を作成するためのディレクトリを作成する
-RUN mkdir -p /run/mysqld
+RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 
 ENTRYPOINT [ "/tmp/entrypoint.sh" ]
