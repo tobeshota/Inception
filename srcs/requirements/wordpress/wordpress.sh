@@ -37,5 +37,8 @@ else
 	echo "WordPress files already exist. Skipping download and installation."
 fi
 
+# 実行権限を追加する
+chmod 644 wp-config.php
+
 # PHP-FPMを-F（フォアグラウンド）で起動する（コンテナが終了しないようにするため）
 exec php-fpm8.2 -F
