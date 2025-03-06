@@ -12,7 +12,7 @@ services:
     ports:
       - "443:443"
     volumes:
-      - ${HOME}/data/web:/var/www/html
+      - web:/var/www/html
     networks:
       - inception
 
@@ -24,7 +24,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ${HOME}/data/db:/var/lib/mysql
+      - db:/var/lib/mysql
     restart: always
     env_file:
       - .env
@@ -41,7 +41,7 @@ services:
     ports:
       - "9000:9000"
     volumes:
-      - ${HOME}/data/web:/var/www/html
+      - web:/var/www/html
     restart: always
     env_file:
       - .env
@@ -51,3 +51,15 @@ services:
 networks:
   inception:
     driver: bridge
+
+volumes:
+  db:
+    driver_opts:
+      type: none
+      device: ${HOME}/data/db
+      o: bind
+  web:
+    driver_opts:
+      type: none
+      device: ${HOME}/data/web
+      o: bind
